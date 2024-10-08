@@ -13,7 +13,7 @@ import React, { Suspense, lazy } from 'react';
 
 const App = () => {
   return (
-    <Suspense fallback={<div>Loading Models...😁</div>}>
+    <Suspense fallback={<div style={{textAlign:"center",marginTop:"10%"}}><h4 style={{color:"white",textAlign:"center",fontSize:"14px",fontWeight:"300"}}>Hey there! Just a moment—loading the model to deliver an awesome experience. Thanks for your patience!</h4></div>}>
       <NavBar />
       <HeroSection />
       <AboutSection/>
