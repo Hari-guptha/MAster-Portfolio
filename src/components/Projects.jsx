@@ -80,21 +80,18 @@ const Projects = () => {
                     </div>
                 </Box>
                 <div style={{ flex: "0 0 70% " }}>
+                {width > 600 ? (
                     <Canvas dpr={Math.min(window.devicePixelRatio, 2)} style={{ widows: width, height: (height - 400), borderRadius: "10px" }} shadows camera={{ position: [5, 0, 5], fov: width > 600 ? 65 : 50 }}>
                         <color attach="background" args={["black"]} />
                         <ambientLight color={"white"} intensity={3} />
                         <directionalLight position={[10, 10, 10]} intensity={3} />
-                        {width > 600 ? (
-                            <>
                                 <Monitor image={currectimg} />
                                 <LeftMonitor image={currectimg} />
                                 <RightMonitor />
-                            </>
-                        ) : null}
                         <OrbitControls enableZoom={false}
                             maxPolarAngle={Math.PI / 2}
                             minPolarAngle={Math.PI / 4} />
-                    </Canvas>
+                    </Canvas> ) : null}
                     {currectimg >= 0 ? <div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <div id='skillsicons'>
