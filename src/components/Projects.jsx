@@ -84,9 +84,9 @@ const Projects = () => {
                         <color attach="background" args={["black"]} />
                         <ambientLight color={"white"} intensity={3} />
                         <directionalLight position={[10, 10, 10]} intensity={3} />
-                        <Monitor image={currectimg} />
                         {width > 600 ? (
                             <>
+                                <Monitor image={currectimg} />
                                 <LeftMonitor image={currectimg} />
                                 <RightMonitor />
                             </>
