@@ -41,7 +41,7 @@ const HeroSection = () => {
                     <Text fontSize={window.innerWidth <= 600 ? 1 : window.innerWidth / 400} letterSpacing={-0.06} font="fonts/Poppins-Bold.ttf">
                         Hari Guptha
                         <meshBasicMaterial color={bloom} toneMapped={false}>
-                            {/* <videoTexture attach="map" args={[video]} encoding={THREE.sRGBEncoding} /> */}
+                            <videoTexture attach="map" args={[video]} encoding={THREE.sRGBEncoding} />
                         </meshBasicMaterial>
                     </Text>
                     <Text position={window.innerWidth <= 600 ? [0, -1, 0] : [0, -3, 0]} fontSize={window.innerWidth <= 600 ? 0.3 : 0.4} letterSpacing={-0.06} font="fonts/Poppins-Light.ttf">
@@ -50,10 +50,10 @@ const HeroSection = () => {
                         </meshBasicMaterial>
                     </Text>
                 </mesh>
-                {/* {width > 600 ? (
+                {width > 600 ? (
                     <EffectComposer>
                         <Bloom mipmapBlur intensity={1.5} />
-                    </EffectComposer>) : null} */}
+                    </EffectComposer>) : null}
             </Canvas>
         </div>
     );
