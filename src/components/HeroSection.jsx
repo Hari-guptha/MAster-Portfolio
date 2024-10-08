@@ -50,10 +50,11 @@ const HeroSection = () => {
                         </meshBasicMaterial>
                     </Text>
                 </mesh>
-                {width > 600 ? (
+                {/* {width > 600 ? ( */}
                     <EffectComposer>
                         <Bloom mipmapBlur intensity={1.5} />
-                    </EffectComposer>) : null}
+                    </EffectComposer>
+                    {/*  ): null} */}
             </Canvas>
         </div>
     );
