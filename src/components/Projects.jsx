@@ -4,6 +4,8 @@ import React, { Suspense, useEffect, lazy, useRef, useState } from 'react'
 import { Constants, ImageImports } from '../constants/Constants'
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const LeftMonitor = lazy(() =>
     import('./Models/MonitorLeft').then(module => ({ default: module.LeftMonitor }))
 );
@@ -49,7 +51,7 @@ const Projects = () => {
                                     // Scroll horizontally to the left
                                 }}
                             >
-                                <ArrowCircleUpIcon />
+                                <KeyboardArrowLeftIcon />
                             </button>
 
                             {/* Images Container */}
@@ -73,7 +75,7 @@ const Projects = () => {
                                     container.scrollLeft += scrollAmount;
                                 }}
                             >
-                                <ArrowCircleDownIcon />
+                                <KeyboardArrowRightIcon />
                             </button>
                         </div>
                     </div>
