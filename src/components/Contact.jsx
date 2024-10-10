@@ -3,7 +3,6 @@ import { Constants, ImageImports } from '../constants/Constants'
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-    // const [emailpop, setemailpop] = useState(false)
     const form = useRef();
     const sendEmail = (e) => {
         e.preventDefault();
@@ -14,14 +13,19 @@ const Contact = () => {
             .then(
                 () => {
                     const element = document.getElementById("mailsentnote");
-                    element.style.display = "block"
+                    element.style.display = "block";
                     console.log('SUCCESS!');
+    
+                    setTimeout(() => {
+                        element.style.display = "none";
+                    }, 5000); 
                 },
                 (error) => {
                     console.log('FAILED...', error.text);
                 },
             );
     };
+    
 
 
 
@@ -38,9 +42,9 @@ const Contact = () => {
                 <div id="ContactWrapper">
                     <form ref={form} onSubmit={sendEmail} id='ContactForm'>
                         <h5>Name</h5>
-                        <input name="user_name" required type="text" placeholder='Enter your name' />
+                        <input name="from_name" required type="text" placeholder='Enter your name' />
                         <h5 style={{ marginTop: "20px" }}>Email</h5>
-                        <input name="user_email" required type="email" placeholder='Enter your Email' />
+                        <input name="from_Email" required type="email" placeholder='Enter your Email' />
                         <h5 style={{ marginTop: "20px" }}>Comment</h5>
                         <input name="message" required type="text" placeholder='Enter your Comment' />
                         <div style={{ display: "flex", justifyContent: "center" }}>
