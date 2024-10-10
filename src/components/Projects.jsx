@@ -1,29 +1,31 @@
-import { Environment, OrbitControls } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import React, { useEffect, useRef, useState } from 'react'
-import { Monitor } from './Models/Monitor'
+import React, { Suspense, useEffect, lazy, useRef, useState } from 'react'
 import { Constants, ImageImports } from '../constants/Constants'
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-import { LeftMonitor } from './Models/MonitorLeft'
-import { RightMonitor } from './Models/MonitorRight'
-import { div } from 'three/webgpu'
+const LeftMonitor = lazy(() =>
+    import('./Models/MonitorLeft').then(module => ({ default: module.LeftMonitor }))
+);
+const RightMonitor = lazy(() =>
+    import('./Models/MonitorRight').then(module => ({ default: module.RightMonitor }))
+);
+const Monitor = lazy(() =>
+    import('./Models/Monitor').then(module => ({ default: module.Monitor }))
+);
 import ScrReSizeHandler from './Helper/ScrReSizeHandler'
 import { Box } from '@mui/material'
-// import { EffectComposer, HueSaturation, BrightnessContrast } from '@react-three/postprocessing';
+
+
 
 
 const Projects = () => {
     const sliderRef = useRef(null);
-    const sliderRef2 = useRef(null);
-    const scrollAmount = 100;
-    const [currectimg, setcurrentimg] = useState()
-    const [images, setImages] = useState(Constants.Projets.map(project => project.Thumbnail))
     const { width, height } = ScrReSizeHandler()
-
-    useEffect(() => {
-        { console.log(sliderRef) }
-    }, [sliderRef])
+    const sliderRef2 = useRef(null);
+    const [currectimg, setcurrentimg] = useState(width >= 600 ? null : 0)
+    const [images, setImages] = useState(Constants.Projets.map(project => project.Thumbnail))
+    const scrollAmount = width >= 600 ? 100 : 240;
 
 
     return (
@@ -40,12 +42,11 @@ const Projects = () => {
                     <div id="ProjectSlider">
                         <div className="ProjectSliderContiner">
                             {/* Left Navigation Button */}
-                            <button
+                            <button style={{ height: "150px", width: "30px", padding: 0 }}
                                 className="nav-btn"
                                 onClick={() => {
                                     const container = sliderRef2.current;
                                     container.scrollLeft -= scrollAmount;
-                                    console.log(container) // Scroll horizontally to the right
                                     // Scroll horizontally to the left
                                 }}
                             >
@@ -66,12 +67,11 @@ const Projects = () => {
                             </div>
 
                             {/* Right Navigation Button */}
-                            <button
+                            <button style={{ height: "150px", width: "30px", padding: 0 }}
                                 className="nav-btn"
                                 onClick={() => {
                                     const container = sliderRef2.current;
                                     container.scrollLeft += scrollAmount;
-                                    console.log(container) // Scroll horizontally to the right
                                 }}
                             >
                                 <ArrowCircleDownIcon />
@@ -80,18 +80,20 @@ const Projects = () => {
                     </div>
                 </Box>
                 <div style={{ flex: "0 0 70% " }}>
-                {width > 600 ? (
-                    <Canvas dpr={Math.min(window.devicePixelRatio, 2)} style={{ widows: width, height: (height - 400), borderRadius: "10px" }} shadows camera={{ position: [5, 0, 5], fov: width > 600 ? 65 : 50 }}>
-                        <color attach="background" args={["black"]} />
-                        <ambientLight color={"white"} intensity={3} />
-                        <directionalLight position={[10, 10, 10]} intensity={3} />
+                    {width > 600 ? (
+                        <Canvas dpr={Math.min(window.devicePixelRatio, 2)} style={{ widows: width, height: (height - 250), borderRadius: "10px" }} shadows camera={{ position: [5, 0, 5], fov: width > 600 ? 65 : 50 }}>
+                            <color attach="background" args={["black"]} />
+                            <ambientLight color={"white"} intensity={3} />
+                            <directionalLight position={[10, 10, 10]} intensity={3} />
+                            <Suspense >
                                 <Monitor image={currectimg} />
                                 <LeftMonitor image={currectimg} />
                                 <RightMonitor />
-                        <OrbitControls enableZoom={false}
-                            maxPolarAngle={Math.PI / 2}
-                            minPolarAngle={Math.PI / 4} />
-                    </Canvas> ) : null}
+                            </Suspense>
+                            <OrbitControls enableZoom={false}
+                                maxPolarAngle={Math.PI / 2}
+                                minPolarAngle={Math.PI / 4} />
+                        </Canvas>) : null}
                     {currectimg >= 0 ? <div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <div id='skillsicons'>
@@ -106,7 +108,18 @@ const Projects = () => {
                             </div>
                         </div>
                         <h3 id="ProjectContent">{Constants.Projets[currectimg].content}</h3>
-                    </div> : null}
+                    </div> : <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div id='skillsicons'>
+                            {Constants.Projets[currectimg].Tech.map((icon, index) => {
+                                return <img id="skillicon" key={index} src={icon} alt="icons" />
+                            })}
+                        </div>
+                        <div>
+                            {
+                                Constants.Projets[currectimg].Live ? <a target='_blank' href={Constants.Projets[currectimg].Live}><h4 id='LivBtn'>LIVE - click to see</h4></a> : <></>
+                            }
+                        </div>
+                    </div>}
                 </div>
                 <Box sx={{ display: { sm: "block", xs: "none" } }} id='ProjectSlider'>
                     <div className="ProjectSliderContiner">

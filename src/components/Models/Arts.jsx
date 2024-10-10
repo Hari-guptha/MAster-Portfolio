@@ -1,32 +1,16 @@
-import React, { useEffect } from 'react'
-import { MeshReflectorMaterial, useGLTF } from '@react-three/drei'
-import * as THREE from 'three';
-
+import Reactx from 'react'
+import { useGLTF } from '@react-three/drei'
+import { TextureLoader } from 'three';
+import { useLoader } from '@react-three/fiber';
+import * as THREE from 'three'
 
 export function Arts(props) {
   const { nodes, materials } = useGLTF('Models/circle.glb')
-  const mainscreen = React.useMemo(() => {
-    const video = document.createElement('video');
-    video.src = 'art.mp4';
-    video.crossOrigin = 'Anonymous';
-    video.loop = true;
-    video.muted = true;
-    video.generateMipmaps = false;
-    video.minFilter = THREE.LinearFilter;
-    video.magFilter = THREE.LinearFilter;
-    video.format = THREE.RGBFormat;
-    return video;
-  }, []);
+  const texture = useLoader(TextureLoader, '/Models/painting.png');
 
-  useEffect(() => {
-    mainscreen.play();
-  }, [mainscreen]);
-
-  const createVideoTexture = (videoElement) => {
-    const videoTexture = new THREE.VideoTexture(videoElement);
-    videoTexture.flipY = false;
-    return videoTexture;
-  };
+  texture.wrapT = THREE.RepeatWrapping; 
+  texture.repeat.y = -1; 
+  texture.offset.y = 1; 
 
   return (
     <group {...props} dispose={null} position={[0, -2, 0]} scale={0.5}>
@@ -96,9 +80,7 @@ export function Arts(props) {
         <mesh geometry={nodes.Cube034_1.geometry} material={materials['Material.003']} />
       </group>
       <mesh geometry={nodes.videoboard.geometry} material={materials['Material.020']} position={[0, 4.427, 0.215]} rotation={[0, 0.003, 0]} scale={[4.045, 2.608, 0.137]} >
-        <meshBasicMaterial toneMapped={false}>
-          <primitive attach="map" object={createVideoTexture(mainscreen)} />
-        </meshBasicMaterial>
+        <meshBasicMaterial map={texture} />
       </mesh>
       <group position={[0, 4.427, 0.215]} rotation={[0, 0.003, 0]} scale={[4.045, 2.608, 0.137]}>
         <mesh geometry={nodes.Cube039.geometry} material={materials['Material.010']} />

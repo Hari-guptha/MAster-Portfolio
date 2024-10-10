@@ -6,7 +6,8 @@ import ScrReSizeHandler from './Helper/ScrReSizeHandler'
 const LineOfWork = () => {
     const { width, height } = ScrReSizeHandler()
     return (
-        <div id='SectionSpacing'>
+        <div id='Experience'>
+                <div id='SectionSpacing'>
             <div id='AboutTitle'>
                 <div>
                     <h3 id='SectionTitle'>Line of work</h3>
@@ -32,6 +33,7 @@ const LineOfWork = () => {
                     </div>
                 })}
             </div>
+        </div>
         </div>
     )
 }

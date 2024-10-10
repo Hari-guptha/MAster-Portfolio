@@ -1,14 +1,13 @@
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { Environment, Text } from "@react-three/drei";
+import { Text } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import * as THREE from 'three';
-import { ImageImports } from "../constants/Constants";
 import ScrReSizeHandler from "./Helper/ScrReSizeHandler";
 
 const HeroSection = () => {
     const bloom = new THREE.Color("white");
-    bloom.multiplyScalar(1.5);
+    bloom.multiplyScalar(1.33333333333333333);
 
     const [video] = useState(() => Object.assign(document.createElement('video'), {
         src: '/font.mp4',
@@ -29,7 +28,7 @@ const HeroSection = () => {
 
 
     return (
-        <div style={{ position: "relative" }}>
+        <div id="Home" style={{ position: "relative" }}>
             <Canvas dpr={Math.min(window.devicePixelRatio, 2)}
                 id="HeroSection"
                 style={{ width: width, height: height }}
@@ -51,10 +50,10 @@ const HeroSection = () => {
                     </Text>
                 </mesh>
                 {/* {width > 600 ? ( */}
-                    <EffectComposer>
-                        <Bloom mipmapBlur intensity={1.5} />
-                    </EffectComposer>
-                    {/*  ): null} */}
+                <EffectComposer>
+                    <Bloom mipmapBlur intensity={1.3} />
+                </EffectComposer>
+                {/*  ): null} */}
             </Canvas>
         </div>
     );

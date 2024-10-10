@@ -1,6 +1,5 @@
-import flow from '../assets/image/flow.png'
 import about from '../assets/image/about.png'
-
+import aboutphone from '../assets/image/aboutphone.jpg'
 
 //Top Icon
 import VoiceIcon from '../assets/image/Icons/voice.png'
@@ -51,6 +50,7 @@ import form from '../assets/image/Projects/form.png'
 
 
 
+
 //projects video
 // import drcvideo from '../assets/image/Projects/video/drc.mp4'
 // import aidsvideo from '../assets/image/Projects/video/aids.mp4'
@@ -75,7 +75,32 @@ import form from '../assets/image/Projects/form.png'
 
 
 export const Constants = {
-    "Navbar": ['Home', 'About', 'Experience', 'Projects', 'Digital art', 'Contact'],
+    "Navbar": [
+        {
+            "Name": "Home",
+            "offset": 30
+        },
+        {
+            "Name": "About",
+            "offset": 110
+        },
+        {
+            "Name": "Experience",
+            "offset": 110
+        },
+        {
+            "Name": "Projects",
+            "offset": 150
+        },
+        {
+            "Name": "Digital art",
+            "offset": 110
+        },
+        {
+            "Name": "Contact",
+            "offset": 110
+        }
+    ],
     "LineOfWork": [
         {
             "width": "150px",
@@ -122,13 +147,13 @@ export const Constants = {
         {
             "Thumbnail": drc,
             "Tech": [htmlIcon, cssIcon, jsIcon],
-            "Live":"https://hari-guptha.github.io/DRCSTUDIO/",
+            "Live": "https://hari-guptha.github.io/DRCSTUDIO/",
             // "video": drcvideo,
             "content": "DRC is an innovative platform for frontend developers, offering a vast library of modern tech stacks and free, high-quality website templates. With DRC, developers can instantly download web components such as navbars, buttons, and sliders, speeding up the development process. The platform is built using HTML, CSS, and JavaScript."
         },
         {
             "Thumbnail": ume,
-            "Live":"https://umesoftwaresolutions.com/",
+            "Live": "https://umesoftwaresolutions.com/",
             "Tech": [reactIcon],
             // "video": umevideo,
             "content": "UME is a dynamic software solutions company specializing in bespoke applications for businesses across industries. I created this landing page to highlight UME’s technological innovation and expertise. Built with React.js, the design showcases the company’s forward-thinking approach."
@@ -166,14 +191,14 @@ export const Constants = {
         },
         {
             "Thumbnail": threedmap,
-            "Live":"https://3-d-port-folio-theta.vercel.app/",
+            "Live": "https://3-d-port-folio-theta.vercel.app/",
             "Tech": [threeIcon, htmlIcon, cssIcon, jsIcon],
             // "video": threedmapvideo,
             "content": "3D Map showcases my ability to create custom 3D models and integrate them into a highly immersive environment. This project, built using Three.js, demonstrates my proficiency in crafting interactive, realistic virtual spaces."
         },
         {
             "Thumbnail": haunt,
-            "Live":"https://grave-xi.vercel.app/",
+            "Live": "https://grave-xi.vercel.app/",
             "Tech": [threeIcon, htmlIcon, cssIcon, jsIcon],
             // "video": hauntvideo,
             "content": "Haunted House is one of the key projects in my learning journey with Three.js and React Three Fiber. It was a fascinating exercise where all the models were crafted entirely through pure Three.js code, showcasing my skills in 3D development."
@@ -213,8 +238,8 @@ export const Constants = {
 
 
 export const ImageImports = {
-    "heroFlowImg": flow,
     "aboutImg": about,
+    "aboutphoneImg": aboutphone,
     "voiceIcon": VoiceIcon,
     "workIcon": WorkIcon,
     "ProjectIcon": ProjectIcon,

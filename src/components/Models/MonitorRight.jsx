@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { MeshReflectorMaterial, useGLTF } from '@react-three/drei';
+import React, { useEffect } from 'react';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { useLoader } from '@react-three/fiber';
 
 export function RightMonitor(props) {
   const { nodes, materials } = useGLTF('Models/monitor.glb');
@@ -11,7 +10,7 @@ export function RightMonitor(props) {
     video.crossOrigin = 'Anonymous';
     video.loop = true;
     video.muted = true;
-    video.generateMipmaps = false; 
+    video.generateMipmaps = false;
     video.minFilter = THREE.LinearFilter;
     video.magFilter = THREE.LinearFilter;
     video.format = THREE.RGBFormat;
@@ -37,11 +36,11 @@ export function RightMonitor(props) {
         <meshStandardMaterial attach="material" color="black" />
       </mesh>
       <mesh geometry={nodes.Screen001.geometry} material={materials['Material.001']} position={[0.7, 0.293, -0.179]} rotation={[-0.057, 0, 0]} scale={[1, 1.066, 1]}>
-          <meshBasicMaterial toneMapped={false}>
-            <primitive attach="map" object={createVideoTexture(rightscreen)} />
-          </meshBasicMaterial>
+        <meshBasicMaterial toneMapped={false}>
+          <primitive attach="map" object={createVideoTexture(rightscreen)} />
+        </meshBasicMaterial>
       </mesh>
-     
+
     </group>
   );
 }

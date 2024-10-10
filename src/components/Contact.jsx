@@ -1,10 +1,32 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Constants, ImageImports } from '../constants/Constants'
-import { Canvas } from '@react-three/fiber'
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+    // const [emailpop, setemailpop] = useState(false)
+    const form = useRef();
+    const sendEmail = (e) => {
+        e.preventDefault();
+        emailjs
+            .sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMP_ID, form.current, {
+                publicKey: import.meta.env.VITE_PUBLIC_KEY,
+            })
+            .then(
+                () => {
+                    const element = document.getElementById("mailsentnote");
+                    element.style.display = "block"
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error.text);
+                },
+            );
+    };
+
+
+
     return (
-        <div>
+        <div id='Contact'>
             <div id='SectionSpacing'>
                 <div id='AboutTitle'>
                     <div>
@@ -14,16 +36,17 @@ const Contact = () => {
                     <img id='TopIcon' src={ImageImports.ContactIcon} alt="voice" />
                 </div>
                 <div id="ContactWrapper">
-                    <form id='ContactForm'>
+                    <form ref={form} onSubmit={sendEmail} id='ContactForm'>
                         <h5>Name</h5>
-                        <input name="user_name" type="text" placeholder='Enter your name' />
+                        <input name="user_name" required type="text" placeholder='Enter your name' />
                         <h5 style={{ marginTop: "20px" }}>Email</h5>
-                        <input name="user_email" type="text" placeholder='Enter your Email' />
+                        <input name="user_email" required type="email" placeholder='Enter your Email' />
                         <h5 style={{ marginTop: "20px" }}>Comment</h5>
-                        <input name="message" type="text" placeholder='Enter your Comment' />
+                        <input name="message" required type="text" placeholder='Enter your Comment' />
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                            <input onClick={() => setemailpop(true)} type="submit" value="Send" style={{ width: '200px' }} id='contactbtn' />
+                            <input type="submit" value="Send" style={{ width: '200px' }} id='contactbtn' />
                         </div>
+                        <h5 id='mailsentnote'>Email Successfully Sent!</h5>
                     </form>
                     <div id='SocialMedia' className='centerDiv'>
                         {Constants.SocialMedias.map((social, index) => {

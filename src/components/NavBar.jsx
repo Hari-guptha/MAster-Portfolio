@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Box, Drawer } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
 
 
 
@@ -11,7 +12,6 @@ const NavBar = () => {
   const [NavScroll, setNavScroll] = useState(false);
 
   const scrollToTarget = (target, offset = 100) => {
-    console.log(target);
     const element = document.getElementById(target);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
@@ -41,11 +41,11 @@ const NavBar = () => {
   return (
     <>
       <Box sx={{ display: { sm: "block", xs: "none" } }}>
-        <div id='NavBar' style={{backgroundColor: NavScroll ? 'black' : 'transparent'}}>
+        <div id='NavBar' style={{ backgroundColor: NavScroll ? 'black' : 'transparent' }}>
           <a target="_blank" href="https://www.linkedin.com/in/hari-guptha-bb6a29208/"><h5 id="hiremebtn" className='glow-on-hover'>Hire me</h5></a>
           <div id='NavItems'>
             {Constants.Navbar.map((NavItem, index) => {
-              return <h5 id='NavItem' key={index}>{NavItem}</h5>
+              return <Link to="#" key={index} onClick={() => { scrollToTarget(NavItem.Name, NavItem.offset), setNavControl(false) }}><h5 id='NavItem' >{NavItem.Name}</h5></Link>
             })}
           </div>
         </div>
@@ -68,7 +68,7 @@ const NavBar = () => {
             <div id='SideBarContainer'>
               <div id='NavItems'>
                 {Constants.Navbar.map((NavItem, index) => {
-                  return <h5 id='NavItem' key={index}>{NavItem}</h5>
+                  return <Link key={index} to="#" onClick={() => { scrollToTarget(NavItem.Name, NavItem.offset), setNavControl(false) }}><h5 id='NavItem' >{NavItem.Name}</h5></Link>
                 })}
               </div>
               <a target="_blank" href="https://www.linkedin.com/in/hari-guptha-bb6a29208/"><h5 id="hiremebtn" className='glow-on-hover'>Hire me</h5></a>

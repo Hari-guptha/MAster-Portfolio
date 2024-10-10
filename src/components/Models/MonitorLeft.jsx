@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { MeshReflectorMaterial, useGLTF } from '@react-three/drei';
+import React, { useEffect } from 'react';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { useLoader } from '@react-three/fiber';
 
 export function LeftMonitor(props) {
   const { nodes, materials } = useGLTF('Models/monitor.glb');
