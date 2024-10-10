@@ -20,9 +20,9 @@ const ArtsSection = () => {
                 </div>
                 <div style={{ position: "relative", marginTop: "5%" }}>
                     <Canvas dpr={Math.min(window.devicePixelRatio, 2)}
-                        style={{ width: width > 600 ? (width - 120) : (width - 40), height: width > 600 ? (height - 600) : (height - 350), borderRadius: "10px" }}
+                        style={{ width: width > 600 ? (width - 120) : (width - 40), height: width > 600 ? (height - 250) : (height - 350), borderRadius: "10px" }}
                         shadows
-                        camera={{ position: [19, 1, 2], fov: width > 600 ? 50 : 70 }}
+                        camera={{ position: [19, 1, 2], fov: width > 600 ? 40 : 70 }}
                     >
                         {/* <Environment preset="sunset" environmentIntensity={1} /> */}
                         <ambientLight color={"white"} intensity={0.8} />
