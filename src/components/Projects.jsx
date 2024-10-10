@@ -23,10 +23,9 @@ const Projects = () => {
     const sliderRef = useRef(null);
     const { width, height } = ScrReSizeHandler()
     const sliderRef2 = useRef(null);
-    const [currectimg, setcurrentimg] = useState(width >= 600 ? null : 0)
+    const [currectimg, setcurrentimg] = useState(width >= 600 ? undefined : 0)
     const [images, setImages] = useState(Constants.Projets.map(project => project.Thumbnail))
     const scrollAmount = width >= 600 ? 100 : 240;
-
 
     return (
         <div id='SectionSpacing'>
@@ -108,18 +107,7 @@ const Projects = () => {
                             </div>
                         </div>
                         <h3 id="ProjectContent">{Constants.Projets[currectimg].content}</h3>
-                    </div> : <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div id='skillsicons'>
-                            {Constants.Projets[currectimg].Tech.map((icon, index) => {
-                                return <img id="skillicon" key={index} src={icon} alt="icons" />
-                            })}
-                        </div>
-                        <div>
-                            {
-                                Constants.Projets[currectimg].Live ? <a target='_blank' href={Constants.Projets[currectimg].Live}><h4 id='LivBtn'>LIVE - click to see</h4></a> : <></>
-                            }
-                        </div>
-                    </div>}
+                    </div> : null}
                 </div>
                 <Box sx={{ display: { sm: "block", xs: "none" } }} id='ProjectSlider'>
                     <div className="ProjectSliderContiner">
