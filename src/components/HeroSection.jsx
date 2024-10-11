@@ -7,7 +7,7 @@ import ScrReSizeHandler from "./Helper/ScrReSizeHandler";
 
 const HeroSection = () => {
     const bloom = new THREE.Color("white");
-    bloom.multiplyScalar(1.33333333333333333);
+    bloom.multiplyScalar(1.5);
 
     const [video] = useState(() => Object.assign(document.createElement('video'), {
         src: '/font.mp4',
@@ -51,7 +51,7 @@ const HeroSection = () => {
                 </mesh>
                 {/* {width > 600 ? ( */}
                 <EffectComposer>
-                    <Bloom mipmapBlur intensity={1.3} />
+                    <Bloom mipmapBlur intensity={1.5} />
                 </EffectComposer>
                 {/*  ): null} */}
             </Canvas>

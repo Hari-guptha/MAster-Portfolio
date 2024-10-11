@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { OrbitControls } from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
 import { ImageImports } from "../constants/Constants";
 const Arts = lazy(() => import('./Models/Arts').then(module => ({ default: module.Arts })));
 import ScrReSizeHandler from './Helper/ScrReSizeHandler'
@@ -24,7 +24,7 @@ const ArtsSection = () => {
                         shadows
                         camera={{ position: [19, 1, 2], fov: width > 600 ? 40 : 70 }}
                     >
-                        {/* <Environment preset="sunset" environmentIntensity={1} /> */}
+                        <Environment preset="sunset" environmentIntensity={1} />
                         <ambientLight color={"white"} intensity={0.8} />
                         <directionalLight position={[10, 10, 10]} intensity={1} />
                         <OrbitControls enablePan={false} autoRotate autoRotateSpeed={1} enableZoom={false}
@@ -34,9 +34,6 @@ const ArtsSection = () => {
                         <Suspense>
                             <Arts />
                         </Suspense>
-                        <EffectComposer>
-                            <Bloom mipmapBlur intensity={1.5} />
-                        </EffectComposer>
                     </Canvas>
                 </div>
             </div>
