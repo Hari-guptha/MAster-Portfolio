@@ -74,30 +74,58 @@ const HeroContent = ({ width, height }) => {
         >
             <color attach="background" args={["black"]} />
             <mesh position={[0, 2, 0]} rotation={[0, 1, 0]}>
-                <AnimatedText 
-                    text="Hari Guptha"
-                    fontSize={calculateFontSize}
-                    font="fonts/Poppins-Bold.ttf"
-                    delay={0}
-                >
-                    <meshBasicMaterial color={bloom} toneMapped={false}>
-                        <videoTexture 
-                            attach="map" 
-                            args={[video]} 
-                            encoding={THREE.sRGBEncoding}
-                            generateMipmaps={false}
-                        />
-                    </meshBasicMaterial>
-                </AnimatedText>
-                <AnimatedText 
-                    text="Full-Stack Developer and Creative Designer"
-                    position={calculateSubtitlePosition}
-                    fontSize={calculateSubtitleSize}
-                    font="fonts/Poppins-Light.ttf"
-                    delay={0.3}
-                >
-                    <meshBasicMaterial color={"#727272"} toneMapped={false} />
-                </AnimatedText>
+                {width > 480 ? (
+                    <AnimatedText 
+                        text="Hari Guptha"
+                        fontSize={calculateFontSize}
+                        font="fonts/Poppins-Bold.ttf"
+                        delay={0}
+                    >
+                        <meshBasicMaterial color={bloom} toneMapped={false}>
+                            <videoTexture 
+                                attach="map" 
+                                args={[video]} 
+                                encoding={THREE.sRGBEncoding}
+                                generateMipmaps={false}
+                            />
+                        </meshBasicMaterial>
+                    </AnimatedText>
+                ) : (
+                    <Text 
+                        text="Hari Guptha"
+                        fontSize={calculateFontSize}
+                        font="fonts/Poppins-Bold.ttf"
+                    >
+                        <meshBasicMaterial color={bloom} toneMapped={false}>
+                            <videoTexture 
+                                attach="map" 
+                                args={[video]} 
+                                encoding={THREE.sRGBEncoding}
+                                generateMipmaps={false}
+                            />
+                        </meshBasicMaterial>
+                    </Text>
+                )}
+                {width > 480 ? (
+                    <AnimatedText 
+                        text="Full-Stack Developer and Creative Designer"
+                        position={calculateSubtitlePosition}
+                        fontSize={calculateSubtitleSize}
+                        font="fonts/Poppins-Light.ttf"
+                        delay={0.3}
+                    >
+                        <meshBasicMaterial color={"#727272"} toneMapped={false} />
+                    </AnimatedText>
+                ) : (
+                    <Text 
+                        text="Full-Stack Developer and Creative Designer"
+                        position={calculateSubtitlePosition}
+                        fontSize={calculateSubtitleSize}
+                        font="fonts/Poppins-Light.ttf"
+                    >
+                        <meshBasicMaterial color={"#727272"} toneMapped={false} />
+                    </Text>
+                )}
             </mesh>
             <EffectComposer>
                 <Bloom 
