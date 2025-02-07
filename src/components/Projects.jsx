@@ -1,78 +1,106 @@
 import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import React, { Suspense, useEffect, lazy, useRef, useState } from 'react'
+import React, { Suspense, lazy, useRef, useState, useEffect } from 'react'
 import { Constants, ImageImports } from '../constants/Constants'
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-const LeftMonitor = lazy(() =>
-    import('./Models/MonitorLeft').then(module => ({ default: module.LeftMonitor }))
-);
-const RightMonitor = lazy(() =>
-    import('./Models/MonitorRight').then(module => ({ default: module.RightMonitor }))
-);
-const Monitor = lazy(() =>
-    import('./Models/Monitor').then(module => ({ default: module.Monitor }))
-);
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp'
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import ScrReSizeHandler from './Helper/ScrReSizeHandler'
 import { Box } from '@mui/material'
+import { motion, useAnimation } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
+const LeftMonitor = lazy(() =>
+    import('./Models/MonitorLeft').then(module => ({ default: module.LeftMonitor }))
+)
 
+const RightMonitor = lazy(() =>
+    import('./Models/MonitorRight').then(module => ({ default: module.RightMonitor }))
+)
 
+const Monitor = lazy(() =>
+    import('./Models/Monitor').then(module => ({ default: module.Monitor }))
+)
 
 const Projects = () => {
-    const sliderRef = useRef(null);
-    const { width, height } = ScrReSizeHandler()
-    const sliderRef2 = useRef(null);
-    const [currectimg, setcurrentimg] = useState(width >= 600 ? undefined : 0)
-    const [images, setImages] = useState(Constants.Projets.map(project => project.Thumbnail))
-    const scrollAmount = width >= 600 ? 100 : 240;
+    const sliderRef = useRef(null)
+    const sliderRef2 = useRef(null)
+    const { width } = ScrReSizeHandler()
+    const [currectimg, setcurrentimg] = useState(width >= 768 ? undefined : 0)
+    const [images] = useState(Constants.Projets.map(project => project.Thumbnail))
+    const scrollAmount = width >= 768 ? 100 : 240
+    
+    const controls = useAnimation()
+    const [ref, inView] = useInView({
+        threshold: 0.1,
+        triggerOnce: false
+    })
+
+    useEffect(() => {
+        if (inView) {
+            controls.start({
+                x: 0,
+                y: 0,
+                opacity: 1,
+                transition: {
+                    duration: 0.8,
+                    ease: "easeOut"
+                }
+            })
+        } else {
+            controls.start({
+                x: -100,
+                opacity: 0
+            })
+        }
+    }, [controls, inView])
 
     return (
-        <div id='SectionSpacing'>
-            <div id='AboutTitle'>
+        <div id='SectionSpacing' ref={ref}>
+            <motion.div 
+                id='AboutTitle'
+                initial={{ x: -100, opacity: 0 }}
+                animate={controls}
+            >
                 <div>
                     <h3 id='SectionTitle'>Works</h3>
                     <h4 id='SubTitle'>Flow of innovative undertakings</h4>
                 </div>
                 <img id='TopIcon' src={ImageImports.ProjectIcon} alt="work" />
-            </div>
+            </motion.div>
             <div id='Projects'>
-                <Box sx={{ display: { sm: "none", xs: "block" } }}>
+                {/* Mobile Slider */}
+                <Box sx={{ display: { md: "none", xs: "block" }, width: '100%' }}>
                     <div id="ProjectSlider">
                         <div className="ProjectSliderContiner">
-                            {/* Left Navigation Button */}
-                            <button style={{ height: "150px", width: "30px", padding: 0 }}
-                                className="nav-btn"
+                            <button 
+                                className="nav-btn mobile-nav"
                                 onClick={() => {
-                                    const container = sliderRef2.current;
-                                    container.scrollLeft -= scrollAmount;
-                                    // Scroll horizontally to the left
+                                    const container = sliderRef2.current
+                                    container.scrollLeft -= scrollAmount
                                 }}
                             >
                                 <KeyboardArrowLeftIcon />
                             </button>
 
-                            {/* Images Container */}
                             <div className="images-container" ref={sliderRef2}>
                                 {images.map((image, index) => (
                                     <img
                                         onClick={() => setcurrentimg(index)}
-                                        className="image"
-                                        alt="sliderImage"
+                                        className={`image ${currectimg === index ? 'active' : ''}`}
+                                        alt={`Project ${index + 1}`}
                                         key={index}
                                         src={image}
                                     />
                                 ))}
                             </div>
 
-                            {/* Right Navigation Button */}
-                            <button style={{ height: "150px", width: "30px", padding: 0 }}
-                                className="nav-btn"
+                            <button 
+                                className="nav-btn mobile-nav"
                                 onClick={() => {
-                                    const container = sliderRef2.current;
-                                    container.scrollLeft += scrollAmount;
+                                    const container = sliderRef2.current
+                                    container.scrollLeft += scrollAmount
                                 }}
                             >
                                 <KeyboardArrowRightIcon />
@@ -80,44 +108,80 @@ const Projects = () => {
                         </div>
                     </div>
                 </Box>
-                <div style={{ flex: "0 0 70% " }}>
-                    {width > 600 ? (
-                        <Canvas dpr={Math.min(window.devicePixelRatio, 2)} style={{ widows: width, height: (height - 250), borderRadius: "10px" }} shadows camera={{ position: [5, 0, 5], fov: width > 600 ? 65 : 50 }}>
-                            <color attach="background" args={["black"]} />
-                            <ambientLight color={"white"} intensity={3} />
-                            <directionalLight position={[10, 10, 10]} intensity={3} />
-                            <Suspense >
-                                <Monitor image={currectimg} />
-                                <LeftMonitor image={currectimg} />
-                                <RightMonitor />
-                            </Suspense>
-                            <OrbitControls enableZoom={false}
-                                maxPolarAngle={Math.PI / 2}
-                                minPolarAngle={Math.PI / 4} />
-                        </Canvas>) : null}
-                    {currectimg >= 0 ? <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <div id='skillsicons'>
-                                {Constants.Projets[currectimg].Tech.map((icon, index) => {
-                                    return <img id="skillicon" key={index} src={icon} alt="icons" />
-                                })}
+
+                {/* Project Content */}
+                <div className="project-content">
+                    {width > 768 && (
+                        <motion.div
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={controls}
+                        >
+                            <Canvas 
+                                dpr={Math.min(window.devicePixelRatio, 2)} 
+                                style={{ 
+                                    width: '100%', 
+                                    height: 'calc(100vh - 400px)',
+                                    minHeight: '300px',
+                                    borderRadius: "10px" 
+                                }} 
+                                shadows 
+                                camera={{ 
+                                    position: [5, 0, 5], 
+                                    fov: width > 768 ? 65 : 50 
+                                }}
+                            >
+                                <color attach="background" args={["black"]} />
+                                <ambientLight color={"white"} intensity={3} />
+                                <directionalLight position={[10, 10, 10]} intensity={3} />
+                                <Suspense fallback={null}>
+                                    <Monitor image={currectimg} />
+                                    <LeftMonitor image={currectimg} />
+                                    <RightMonitor />
+                                </Suspense>
+                                <OrbitControls 
+                                    enableZoom={false}
+                                    maxPolarAngle={Math.PI / 2}
+                                    minPolarAngle={Math.PI / 4} 
+                                />
+                            </Canvas>
+                        </motion.div>
+                    )}
+
+                    {currectimg >= 0 && (
+                        <div className="project-details">
+                            <div className="project-header">
+                                <div id='skillsicons'>
+                                    {Constants.Projets[currectimg].Tech.map((icon, index) => (
+                                        <img id="skillicon" key={index} src={icon} alt={`Tech ${index + 1}`} />
+                                    ))}
+                                </div>
+                                {Constants.Projets[currectimg].Live && (
+                                    <a 
+                                        target='_blank' 
+                                        rel="noopener noreferrer" 
+                                        href={Constants.Projets[currectimg].Live}
+                                    >
+                                        <h4 id='LivBtn'>LIVE - click to see</h4>
+                                    </a>
+                                )}
                             </div>
-                            <div>
-                                {
-                                    Constants.Projets[currectimg].Live ? <a target='_blank' href={Constants.Projets[currectimg].Live}><h4 id='LivBtn'>LIVE - click to see</h4></a> : <></>
-                                }
-                            </div>
+                            <h3 id="ProjectContent">{Constants.Projets[currectimg].content}</h3>
                         </div>
-                        <h3 id="ProjectContent">{Constants.Projets[currectimg].content}</h3>
-                    </div> : null}
+                    )}
                 </div>
-                <Box sx={{ display: { sm: "block", xs: "none" } }} id='ProjectSlider'>
-                    <div className="ProjectSliderContiner">
+
+                {/* Desktop Slider */}
+                <Box sx={{ display: { md: "block", xs: "none" } }} id='ProjectSlider'>
+                    <motion.div 
+                        className="ProjectSliderContiner"
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={controls}
+                    >
                         <button
                             className="nav-btn"
                             onClick={() => {
-                                const container = sliderRef.current;
-                                container.scrollTop -= scrollAmount;
+                                const container = sliderRef.current
+                                container.scrollTop -= scrollAmount
                             }}
                         >
                             <ArrowCircleUpIcon />
@@ -126,8 +190,8 @@ const Projects = () => {
                             {images.map((image, index) => (
                                 <img
                                     onClick={() => setcurrentimg(index)}
-                                    className="image"
-                                    alt="sliderImage"
+                                    className={`image ${currectimg === index ? 'active' : ''}`}
+                                    alt={`Project ${index + 1}`}
                                     key={index}
                                     src={image}
                                 />
@@ -136,16 +200,16 @@ const Projects = () => {
                         <button
                             className="nav-btn"
                             onClick={() => {
-                                const container = sliderRef.current;
-                                container.scrollTop += scrollAmount;
+                                const container = sliderRef.current
+                                container.scrollTop += scrollAmount
                             }}
                         >
                             <ArrowCircleDownIcon />
                         </button>
-                    </div>
+                    </motion.div>
                 </Box>
             </div>
-        </div >
+        </div>
     )
 }
 

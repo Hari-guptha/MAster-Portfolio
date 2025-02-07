@@ -1,0 +1,15 @@
+.header, .hero, .card, .footer {
+  opacity: 1; /* Start with full opacity */
+  min-height: 100px; /* Give elements some height */
+}
+
+.card {
+  margin: 20px 0; /* Add some spacing for scroll trigger */
+  padding: 20px;
+  background: #f0f0f0;
+}
+
+/* For ScrollTrigger to work, make sure the container is scrollable */
+body {
+  min-height: 200vh; /* Makes page scrollable */
+} 
